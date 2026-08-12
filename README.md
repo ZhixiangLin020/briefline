@@ -1,0 +1,318 @@
+# Briefline
+
+**An end-to-end ML system built around a fine-tuned multi-task model for long-form news.**
+
+Briefline uses AdaLoRA to adapt Qwen2.5-3B for long-text multi-task learning. The selected model powers current-news analysis, hybrid retrieval, and source-grounded question answering.
+
+On the held-out test set, the fine-tuned model outperformed its base model by **10.56% in overall multi-task performance**. Downstream RAGAS evaluation showed a **41.2% reduction in the derived hallucination score**.
+
+![Briefline Streamlit frontend](docs/assets/briefline_frontend.png)
+
+## Project Highlights
+
+- **Long-Text Multi-Task Learning**  
+  Builds shared news-domain capabilities across summarization, classification, and keyphrase generation.
+- **Graph-Based Semantic Deduplication**  
+  Combines HNSW nearest-neighbor search with Leiden community detection to reduce semantic redundancy before training.
+- **Parameter-Efficient Fine-Tuning**  
+  Uses AdaLoRA and FlashAttention 2 to adapt Qwen2.5-3B for long inputs without full-model fine-tuning.
+- **From Benchmarks to Current News**  
+  Trains on CNN/DailyMail and KPTime, then applies the selected model to Guardian reporting from a different source and time period.
+- **Faithfulness-Evaluated Hybrid RAG**  
+  Combines keyword and vector retrieval in Weaviate and evaluates downstream answer faithfulness with RAGAS.
+
+## System Overview
+
+**Model lifecycle**
+
+`Data curation → AdaLoRA fine-tuning → Validation-based selection → Held-out test evaluation`
+
+**Application flow**
+
+`Guardian article → Multi-task inference → Hybrid retrieval → Source-grounded answer → RAGAS evaluation`
+
+## Environment Requirements
+
+| Component | Requirement |
+|---|---|
+| Python | Python 3.12 |
+| Data selection, training, evaluation, and RAG backend | Linux x86_64 and one CUDA GPU; NVIDIA A100 or A800 recommended for the full workflow |
+| RAG services | PostgreSQL and Weaviate |
+| Frontend | CPU-only environment is sufficient |
+
+The pinned GPU stack targets **CUDA 12.8** with **PyTorch 2.8.0**, **vLLM 0.10.2**, and **FlashAttention 2.8.3.post1**.
+
+## Choose a Run Path
+
+| Goal | Start here | Scope and success signal |
+|---|---|---|
+| Check the repository before using a GPU | [Repository checks](docs/VERIFICATION.md#1-repository-checks) | CPU validation; repository checks pass |
+| Verify the pinned GPU stack | [GPU runtime check](docs/VERIFICATION.md#2-gpu-runtime-check) | CUDA validation; environment checks pass |
+| Verify the model pipeline with a bounded GPU run | [Model pipeline smoke test](docs/VERIFICATION.md#3-model-pipeline-smoke-test) | Bounded workflow; smoke evaluation and selected-model record are produced |
+| Reproduce the reported model experiment | [Full model experiment](#full-model-experiment) | Full workflow; training manifests and held-out results are produced |
+| Validate RAG configuration without live requests | [RAG preflight](docs/VERIFICATION.md#4-rag-preflight) | Configuration validation; manifest reports `preflight_ok` |
+| Process Guardian articles through RAG | [RAG workflow](#rag-workflow) | Current-news workflow; manifest reports `completed` or `no_new_records` |
+| Open an already populated news database | [CPU-only frontend](#cpu-only-frontend) | Read-only interface; Streamlit page opens |
+
+Reported metrics come from the full model experiment; smoke mode is a bounded integration check.
+
+## Full Model Experiment
+
+This section is the shortest path through the formal data, training, and evaluation workflow. It intentionally does not use sample limits or `--smoke-test`.
+
+### 1. Enter the repository and define shared paths
+
+Run every project command from the repository root—the directory that contains `pyproject.toml`, `README.md`, and the inner `briefline/` Python package. The repository directory itself may have any name; renaming it does not change the commands.
+
+Choose one absolute, writable directory outside the repository for caches, prepared data, checkpoints, and evaluation outputs. Only `BRIEFLINE_WORKSPACE` needs to be changed:
+
+```bash
+# Replace this value with an absolute writable path on your machine.
+export BRIEFLINE_WORKSPACE="/absolute/path/to/briefline_workspace"
+
+export HF_HOME="$BRIEFLINE_WORKSPACE/hf_cache"
+export HF_DATASETS_CACHE="$BRIEFLINE_WORKSPACE/hf_datasets_cache"
+export BRIEFLINE_DATA_ROOT="$BRIEFLINE_WORKSPACE/data"
+export BRIEFLINE_RUN_ROOT="$BRIEFLINE_WORKSPACE/runs"
+
+mkdir -p "$HF_HOME" "$HF_DATASETS_CACHE" \
+  "$BRIEFLINE_DATA_ROOT" "$BRIEFLINE_RUN_ROOT"
+```
+
+The commands below quote these variables, so the selected workspace may contain spaces. Keep large outputs outside the Git checkout to avoid accidentally staging datasets or checkpoints.
+
+For Google Colab, clone or extract the repository to `/content/briefline`, then use the equivalent notebook setup:
+
+```python
+%cd /content/briefline
+%env BRIEFLINE_WORKSPACE=/content/briefline_workspace
+%env HF_HOME=/content/briefline_workspace/hf_cache
+%env HF_DATASETS_CACHE=/content/briefline_workspace/hf_datasets_cache
+%env BRIEFLINE_DATA_ROOT=/content/briefline_workspace/data
+%env BRIEFLINE_RUN_ROOT=/content/briefline_workspace/runs
+```
+
+In Colab, prefix subsequent shell commands with `!`. If dependency installation restarts the runtime, repeat the `%cd` and `%env` cell. In any environment, the remaining commands reuse `BRIEFLINE_DATA_ROOT` and `BRIEFLINE_RUN_ROOT`, so the output from one stage becomes the input to the next.
+
+### 2. Install the training environment
+
+```bash
+python scripts/install_dependencies.py
+python -m briefline check-env
+```
+
+To install the RAG dependencies in the same environment, use `python scripts/install_dependencies.py --with-rag`.
+
+### 3. Build the complete prepared datasets
+
+```bash
+python -m briefline data \
+  --dataset cnn_dm \
+  --stage all \
+  --seed 42 \
+  --output-dir "$BRIEFLINE_DATA_ROOT/cnn_dm"
+
+python -m briefline data \
+  --dataset kptimes \
+  --stage all \
+  --seed 42 \
+  --task-mode both \
+  --output-dir "$BRIEFLINE_DATA_ROOT/kptimes"
+```
+
+`--stage all` runs selection, preparation, and validation. The trainer-ready datasets are written to:
+
+```text
+$BRIEFLINE_DATA_ROOT/cnn_dm/prepared
+$BRIEFLINE_DATA_ROOT/kptimes/prepared
+```
+
+Each prepared dataset contains a `manifest.json` recording row counts, fingerprints, tokenizer provenance, and preparation parameters. Do not add `--limit` when reproducing the reported experiment.
+
+### 4. Configure and run full training
+
+Copy the recorded experiment template instead of editing the tracked file:
+
+```bash
+cp configs/original_experiment.yaml configs/local_experiment.yaml
+```
+
+Edit these fields in `configs/local_experiment.yaml`:
+
+| Field | Value to provide |
+|---|---|
+| `data.cnn_dm_dataset` | Absolute path corresponding to `$BRIEFLINE_DATA_ROOT/cnn_dm/prepared` |
+| `data.kptimes_dataset` | Absolute path corresponding to `$BRIEFLINE_DATA_ROOT/kptimes/prepared` |
+| `training.output_dir` | Absolute path corresponding to `$BRIEFLINE_RUN_ROOT/full` |
+| `training.best_model_dir` | Absolute path corresponding to `$BRIEFLINE_RUN_ROOT/full/best_model` |
+| `training.model_name_or_path` | `Qwen/Qwen2.5-3B-Instruct` or a local snapshot |
+| `training.roberta_path` | `FacebookAI/roberta-large` or the original local snapshot |
+
+Shell variables are not expanded inside YAML. Write the resolved absolute values into `configs/local_experiment.yaml`, not literal strings such as `$BRIEFLINE_DATA_ROOT/...`.
+
+Then launch the formal run:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python -m briefline train \
+  --config configs/local_experiment.yaml
+```
+
+The algorithm, AdaLoRA, loss, sampling, and `TrainingArguments` values are frozen in `training/config.py`. Training writes checkpoints, run metadata, and validation-ranked candidates under the configured run directory.
+
+### 5. Evaluate the saved candidates
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python -m briefline evaluate \
+  --cnn-dm-dataset "$BRIEFLINE_DATA_ROOT/cnn_dm/prepared" \
+  --kptimes-dataset "$BRIEFLINE_DATA_ROOT/kptimes/prepared" \
+  --base-model-path Qwen/Qwen2.5-3B-Instruct \
+  --tokenizer-path Qwen/Qwen2.5-3B-Instruct \
+  --roberta-path FacebookAI/roberta-large \
+  --best-model-dir "$BRIEFLINE_RUN_ROOT/full/best_model" \
+  --output-dir "$BRIEFLINE_RUN_ROOT/full_evaluation" \
+  --temp-merged-model-dir "$BRIEFLINE_RUN_ROOT/tmp_merged_models"
+```
+
+Evaluation reads candidate checkpoints from `best_model/best_k_metrics.json`; it does not retrain the model or rebuild data. The selected checkpoint is determined by the combined validation score. Test results are report-only.
+
+Evaluation writes the validation-selected model record used by the RAG workflow.
+
+See the [Model Pipeline Guide](docs/MODEL_PIPELINE.md) for the complete parameter contract, resume procedure, output manifests, and the optional YAML-driven end-to-end command.
+
+## RAG Workflow
+
+### 1. Install the backend environment
+
+From the repository root, install the base GPU stack and both RAG overlays together:
+
+```bash
+python scripts/install_dependencies.py --with-rag
+```
+
+The live generation and Judge stages require the GPU environment. For a configuration-only preflight on a machine without a visible GPU, follow the [`--allow-no-cuda` procedure](docs/VERIFICATION.md#4-rag-preflight); it does not make the live backend CPU-compatible.
+
+### 2. Provide the external services
+
+PostgreSQL and Weaviate are provisioned as external services.
+
+The database user must be able to create tables and indexes. Backend stages automatically create the core PostgreSQL tables, the Judge table, the recommendation table, and the Weaviate evidence collection when first needed. The taxonomy table is created separately by `python -m briefline taxonomy`.
+
+### 3. Export settings and resolve the selected adapter
+
+Copy the variable names from `.env.example` into exported environment variables, Colab Secrets, or Streamlit Secrets. The project does not automatically load `.env` files, and real credentials must not be committed.
+
+Store RAG artifacts under the same user-selected workspace, or replace these values with another writable location:
+
+```bash
+export RAG_ARTIFACT_DIR="$BRIEFLINE_WORKSPACE/rag"
+export RAG_TEMP_ROOT="$BRIEFLINE_WORKSPACE/rag/runtime"
+```
+
+After full evaluation, load the validation-selected adapter path:
+
+```bash
+export ADAPTER_PATH="$(python -c 'import json, os; p=os.path.join(os.environ["BRIEFLINE_RUN_ROOT"], "full_evaluation", "best_finetuned_by_full_valid_combo.json"); print(json.load(open(p))["best_model_path"])')"
+test -f "$ADAPTER_PATH/adapter_config.json"
+```
+
+The RAG workflow consumes the validation-selected model produced by the evaluation stage through `ADAPTER_PATH`.
+
+### 4. Preflight and run
+
+Validate the configuration before making external requests or loading models:
+
+```bash
+python -m briefline rag \
+  --mode full \
+  --stages all \
+  --max-new-articles 2500 \
+  --max-pending-articles 2500 \
+  --only-current-run \
+  --recover-pending-generation \
+  --use-colbert \
+  --adapter-path "$ADAPTER_PATH" \
+  --preflight-only
+```
+
+Preflight validates the selected configuration before live requests or model loading. Remove `--preflight-only` to run the production-scale workflow with the same limits.
+
+After the first successful RAG run, build the taxonomy required by the frontend:
+
+```bash
+python -m briefline taxonomy
+```
+
+See the [RAG and Frontend Guide](docs/RAG_FRONTEND_INTEGRATION.md) for the complete settings template, stage ownership, automatic schema behavior, recovery, and faithfulness evaluation.
+
+## CPU-Only Frontend
+
+The frontend reads PostgreSQL and does not load Torch, vLLM, an adapter, or a retrieval model. It expects `raw_articles`, `judge_results`, `category_broad_mapping`, and `article_recommendations` to have been populated by the backend and taxonomy workflows.
+
+```bash
+python -m pip install -r requirements-frontend.txt
+export DATABASE_URL='postgresql://user:password@host:5432/database'
+
+python -m briefline frontend \
+  --server.address 0.0.0.0 \
+  --server.port 8501 \
+  --server.headless true
+```
+
+Open `http://localhost:8501`. Launch the frontend after the RAG and taxonomy workflows have populated the required tables.
+
+## Configuration Map
+
+| File | Purpose |
+|---|---|
+| `configs/original_experiment.yaml` | Recorded full-training paths and model inputs; copy before editing |
+| `configs/pipeline_all.example.yaml` | Data-to-evaluation orchestration template; replace smoke settings before a formal run |
+| `configs/smoke_test.yaml` | Bounded integration check; not an experimental reproduction |
+| `requirements-dev.txt` | Lightweight dependencies for CPU repository checks |
+| `training/config.py` | Frozen optimizer, schedule, sampling, loss, and AdaLoRA settings |
+| `evaluation/config.py` | Evaluation runtime and decoding defaults |
+| `.env.example` | Names of RAG, model-path, artifact-path, and frontend variables |
+| `rag/config.py` | RAG CLI defaults and validation |
+
+## Verification
+
+Repository, GPU, model-pipeline, RAG, and frontend checks are centralized in [Verification and Smoke Tests](docs/VERIFICATION.md).
+
+## Results
+
+| Evaluation | Base | Selected model | Change |
+|---|---:|---:|---:|
+| Validation combined score | 0.734193 | 0.832856 | +13.44% |
+| Test combined score | 0.729252 | 0.806265 | **+10.56%** |
+| RAGAS-derived hallucination score | 0.08343 | 0.04902 | **−41.2%** |
+
+The combined model score is an equal-weight average of CNN/DailyMail and KPTime MoverScore-based task scores. The RAG value is defined as `1 − faithfulness`. Full definitions, checkpoint comparisons, selection rules, and RAGAS scope are documented in [Experiment Results](docs/EXPERIMENT_RESULTS.md).
+
+## Tech Stack
+
+- **Data and training:** HNSW · Leiden · Qwen2.5-3B · PyTorch · Transformers · PEFT/AdaLoRA · FlashAttention 2
+- **Inference and retrieval:** vLLM · Weaviate · PostgreSQL
+- **Application and evaluation:** Streamlit · RAGAS
+
+## Repository Layout
+
+```text
+briefline/          unified CLI and runtime checks
+data_processing/    CNN/DailyMail and KPTime curation
+training/           multi-task AdaLoRA training
+evaluation/         vLLM generation, scoring, and selection
+rag/                incremental Guardian RAG stages
+frontend/           read-only Streamlit application
+configs/            formal, pipeline, and smoke configurations
+scripts/            installation, runtime, and documentation verification
+tests/              CPU regression tests
+docs/               pipeline, results, deployment, and verification guides
+```
+
+## Documentation
+
+- [Model Pipeline Guide](docs/MODEL_PIPELINE.md)
+- [Experiment Results](docs/EXPERIMENT_RESULTS.md)
+- [RAG and Frontend Guide](docs/RAG_FRONTEND_INTEGRATION.md)
+- [Verification and Smoke Tests](docs/VERIFICATION.md)
+
+Run `python -m briefline <command> --help` for the full CLI reference.

@@ -1,0 +1,6 @@
+# CPU-only Briefline frontend. This file intentionally excludes the training,
+# vLLM, RAG, Faithfulness, and ColBERT dependency stacks.
+streamlit==1.61.1
+psycopg==3.3.4
+psycopg-binary==3.3.4
+psycopg-pool==3.3.1

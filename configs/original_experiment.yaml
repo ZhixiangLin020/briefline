@@ -1,0 +1,20 @@
+# Replace every /path/to/... value with an absolute path on the target machine.
+# Shell environment variables are not expanded inside this YAML file.
+data:
+  cnn_dm_dataset: /path/to/cnn_dm_prepared
+  kptimes_dataset: /path/to/kptimes_prepared
+  seed: 42
+  smoke_test: false
+
+training:
+  output_dir: /path/to/outputs/original_run
+  best_model_dir: /path/to/outputs/original_run/best_model
+  model_name_or_path: Qwen/Qwen2.5-3B-Instruct
+  # Replace this placeholder with the local path used by the original run.
+  # Public smoke/default configurations use FacebookAI/roberta-large instead.
+  roberta_path: /path/to/local/roberta-large
+  resume_from_checkpoint: null
+  dry_run: false
+
+# Algorithm, loss, AdaLoRA, sampling, and TrainingArguments values are frozen
+# in training/config.py and are intentionally not configurable here.

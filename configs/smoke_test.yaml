@@ -1,0 +1,19 @@
+# Replace every /path/to/... value with an absolute path on the target machine.
+# Shell environment variables are not expanded inside this YAML file.
+data:
+  cnn_dm_dataset: /path/to/cnn_dm_prepared
+  kptimes_dataset: /path/to/kptimes_prepared
+  seed: 42
+  smoke_test: true
+  max_train_samples_per_dataset: 500
+  max_validation_samples_per_dataset: 50
+  max_test_samples_per_dataset: 50
+  samples_per_epoch: 500
+
+training:
+  output_dir: /path/to/outputs/smoke_test
+  best_model_dir: /path/to/outputs/smoke_test/best_model
+  model_name_or_path: Qwen/Qwen2.5-3B-Instruct
+  roberta_path: FacebookAI/roberta-large
+  smoke_epochs: 3
+  dry_run: false

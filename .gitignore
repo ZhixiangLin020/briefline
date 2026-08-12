@@ -1,0 +1,18 @@
+# Local secrets
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Python-generated cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Local virtual environment
+.venv/
+
+# Local experiment configurations
+/configs/*.local.yaml
+/configs/local_experiment.yaml

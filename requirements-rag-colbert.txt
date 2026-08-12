@@ -1,0 +1,15 @@
+# Optional ColBERT reranking support. Install in the same environment only when
+# `--use-colbert` is needed; the application never installs these at runtime.
+-c requirements.txt
+
+ragatouille==0.0.9.post2
+# Newer llama-index-core releases require setuptools>=80.9, while vLLM 0.10.2
+# requires setuptools<80 on Python 3.12. Pin both packages to the compatible
+# pair selected by pip for the unified environment.
+llama-index==0.12.42
+llama-index-core==0.12.42
+sentence-transformers==3.4.1
+langchain==0.1.20
+langchain-community==0.0.38
+langchain-core==0.1.52
+langchain-text-splitters==0.0.2

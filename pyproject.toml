@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "briefline"
+version = "0.1.0"
+description = "Guardian RAG, data preparation, training, evaluation, and frontend workflows"
+readme = "README.md"
+requires-python = ">=3.12"
+
+[project.scripts]
+briefline = "briefline.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "briefline*",
+    "data_processing*",
+    "evaluation*",
+    "frontend*",
+    "rag*",
+    "training*",
+]
+exclude = ["tests*"]

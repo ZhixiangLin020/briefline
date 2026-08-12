@@ -1,0 +1,40 @@
+# Replace every /path/to/... value with an absolute path on the target machine.
+# Shell environment variables are not expanded inside this YAML file.
+data:
+  cnn_dm:
+    enabled: false
+    stage: all
+    output_dir: /path/to/data_outputs/cnn_dm
+    seed: 42
+    device: cuda
+  kptimes:
+    enabled: false
+    stage: all
+    output_dir: /path/to/data_outputs/kptimes
+    seed: 42
+    device: cuda
+    task_mode: both
+
+training:
+  cnn_dm_dataset: /path/to/cnn_dm_prepared
+  kptimes_dataset: /path/to/kptimes_prepared
+  output_dir: /path/to/outputs/smoke_test
+  best_model_dir: /path/to/outputs/smoke_test/best_model
+  model_name_or_path: Qwen/Qwen2.5-3B-Instruct
+  roberta_path: FacebookAI/roberta-large
+  smoke_test: true
+  max_train_samples_per_dataset: 500
+  max_validation_samples_per_dataset: 50
+  max_test_samples_per_dataset: 50
+  samples_per_epoch: 500
+  smoke_epochs: 3
+
+evaluation:
+  enabled: true
+  base_model_path: Qwen/Qwen2.5-3B-Instruct
+  tokenizer_path: Qwen/Qwen2.5-3B-Instruct
+  roberta_path: FacebookAI/roberta-large
+  output_dir: /path/to/outputs/smoke_test/evaluation
+  smoke_test: true
+  max_samples_per_split_per_dataset: 50
+  temp_merged_model_dir: /path/to/outputs/smoke_test/tmp_merged_models

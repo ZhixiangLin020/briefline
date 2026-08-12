@@ -1,0 +1,6 @@
+# CPU-only dependency entry point for Streamlit Community Cloud.
+# Keep this file synchronized with the root requirements-frontend.txt file.
+streamlit==1.61.1
+psycopg==3.3.4
+psycopg-binary==3.3.4
+psycopg-pool==3.3.1

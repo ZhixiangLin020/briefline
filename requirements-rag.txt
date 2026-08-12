@@ -1,0 +1,9 @@
+# Install only after `python scripts/install_dependencies.py` has established the pinned
+# Torch/vLLM/Transformers/FlashAttention environment.
+-c requirements.txt
+
+openai>=1.40,<2
+weaviate-client==4.22.0
+psycopg[binary,pool]>=3.2,<4
+streamlit>=1.40,<2
+google-genai>=1,<2

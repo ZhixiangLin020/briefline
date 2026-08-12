@@ -1,0 +1,44 @@
+# Unified data, Transformers training, and vLLM evaluation environment.
+#
+# IMPORTANT: install this file through `python scripts/install_dependencies.py`.
+# The installer uses the official FlashAttention wheel directly. It never
+# invokes a FlashAttention source build or falls back when that wheel is absent.
+
+# Shared Python 3.12 / CUDA 12.8 GPU stack verified on A100/A800.
+torch==2.8.0
+torchvision==0.23.0
+torchaudio==2.8.0
+vllm==0.10.2
+flash-attn==2.8.3.post1
+transformers==4.56.2
+huggingface-hub==0.34.4
+# vLLM-compatible transitive pins. Keep Ray below the release that requires
+# packaging>=24.2, and keep OpenCV on the NumPy 1.x-compatible line.
+ray==2.49.2
+opencv-python-headless==4.11.0.86
+
+# Training and evaluation.
+datasets==5.0.0
+accelerate==1.13.0
+trl==1.6.0
+pyarrow==24.0.0
+bitsandbytes>=0.46.1
+peft
+POT
+numpy==1.26.4
+pandas
+PyYAML
+tqdm
+einops
+packaging==23.2
+psutil
+ninja
+setuptools==79.0.1
+wheel==0.45.1
+
+# Data selection and preparation.
+faiss-cpu
+igraph
+leidenalg
+requests
+sentence-transformers

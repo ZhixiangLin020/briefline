@@ -1,0 +1,7 @@
+# Lightweight dependencies for repository checks and documentation validation.
+# This file intentionally excludes the CUDA, training, evaluation, and RAG stacks.
+numpy==1.26.4
+pandas
+PyYAML
+packaging==23.2
+ruff
