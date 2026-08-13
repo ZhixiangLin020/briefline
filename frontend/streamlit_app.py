@@ -1814,12 +1814,16 @@ def get_database_pool() -> ConnectionPool:
 
     return ConnectionPool(
         conninfo=DATABASE_URL,
-        min_size=1,
+        min_size=0,
         max_size=4,
-        timeout=15,
+        timeout=30,
+        reconnect_timeout=60,
+        max_idle=60,
+        check=ConnectionPool.check_connection,
         open=True,
         kwargs={
             "row_factory": dict_row,
+            "connect_timeout": 30,
         },
     )
 
