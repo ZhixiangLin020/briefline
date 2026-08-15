@@ -1,49 +1,62 @@
 # Briefline
 
-**An end-to-end news intelligence system built around multi-task fine-tuning, multi-model verification, and hybrid retrieval.**
+<h3 align="center">
+  An end-to-end news intelligence system<br>
+  built around multi-task fine-tuning, multi-model verification, and hybrid retrieval.
+</h3>
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://briefline.streamlit.app/)
+<p align="center">
+  <a href="https://briefline.streamlit.app/">
+    <img src="https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white" alt="Live Demo">
+  </a>
+</p>
 
 Briefline transforms long-form reporting into verified news intelligence through multi-task fine-tuning, hybrid retrieval, and agentic verification.
 
-The system automates multiple news-processing tasks, verifies every generated output, and selectively refines flagged content to produce more reliable downstream answers while recommending news tailored to users’ interests.
+The system automates multiple news-processing tasks, verifies every generated output, and selectively refines flagged content to deliver more reliable news intelligence while recommending related news based on what users explore.
 
 The system delivered a **10.56%** improvement in held-out multi-task performance, reduced the **hallucination score** by **41.2%**, and achieved over **3× faster** inference with vLLM.
 
-## Project Highlights
-
-- **Long-Text Multi-Task Learning**
-  Fine-tunes one shared Qwen2.5-3B model across summarization, topic classification, and keyphrase generation for long-form news.
-
-- **From Benchmarks to Current News**
-  Trains on CNN/DailyMail and KPTime, then applies the selected model to Guardian reporting from a different source and time period.
-
-- **Multi-Model Orchestration with Faithfulness Evaluation**
-  Orchestrates Qwen2.5-3B generation, claim-level evidence retrieval, Qwen3-14B verification, and downstream answer faithfulness evaluation with RAGAS in a multi-stage agentic workflow.
-
-- **LLM-as-a-Judge with Conditional Routing**
-  Preserves source-supported outputs through PASS routing and sends only VERIFY cases to targeted full-article correction instead of regenerating every output.
-
-- **Hybrid Retrieval and ColBERT Reranking**
-  Combines BM25 and vector search in Weaviate for claim-level evidence retrieval, then applies ColBERT late-interaction reranking to related-article candidates.
-
-- **Graph-Based Semantic Deduplication**
-  Combines HNSW nearest-neighbor search with Leiden community detection to reduce semantic redundancy before training.
-
-- **Efficient Fine-Tuning and Inference**
-  Uses AdaLoRA and FlashAttention 2 for parameter-efficient long-text training, then serves the selected model with vLLM, delivering a measured >3× speedup over the Transformers path on the same workload.
+| Multi-Task Performance | Hallucination Score | vLLM Inference |
+|:---:|:---:|:---:|
+| **+10.56%** | **−41.2%** | **>3× faster** |
 
 ## System Architecture
+
+### Model Training Workflow
 
 <p align="center">
   <img src="docs/assets/briefline_model_training_workflow.svg" alt="Briefline model training workflow" width="90%">
 </p>
 
-The validation-selected model produced above powers the downstream current-news workflow.
+### Model Application Workflow
 
 <p align="center">
-  <img src="docs/assets/briefline_application_workflow.svg" alt="Briefline application workflow" width="90%">
+  <img src="docs/assets/briefline_application_workflow.svg" alt="Briefline model application workflow" width="90%">
 </p>
+
+## Project Highlights
+
+- **Long-Text Multi-Task Learning**<br>
+  Builds shared news-domain capabilities by jointly learning multiple tasks from long-form reporting.
+
+- **From Benchmarks to Current News**<br>
+  Although trained on historical benchmark datasets, the system is applied to newly published Guardian reporting from a different source and time period.
+
+- **Multi-Model Orchestration with Faithfulness Evaluation**<br>
+  Brings complementary models together in an agentic workflow, with faithfulness evaluation measuring how well refined content remains grounded in source evidence.
+
+- **LLM-as-a-Judge with Conditional Routing**<br>
+  Uses an LLM judge to automatically evaluate each output and dynamically route flagged content for targeted correction.
+
+- **Hybrid Retrieval and ColBERT Reranking**<br>
+  Improves retrieval coverage and ranking precision, surfacing more relevant evidence and related news.
+
+- **Graph-Based Semantic Deduplication**<br>
+  Identifies semantic overlap across the training corpus to reduce redundancy and create a cleaner, more diverse dataset.
+
+- **Efficient Fine-Tuning and Inference**<br>
+  Optimizes model adaptation and serving for long-text workloads, delivering a measured over 3× inference speedup.
 
 ## Environment Requirements
 
