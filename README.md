@@ -10,18 +10,18 @@
   </a>
 </p>
 
-Briefline is a news intelligence system powered by multi-task fine-tuning, hybrid retrieval, and agentic verification.
+Briefline is an efficient news intelligence system powered by multi-task fine-tuning, hybrid retrieval, and agentic verification.
 
-The system automates multiple news-processing tasks, verifies every generated output, and selectively refines flagged content to deliver more reliable news intelligence while recommending related news based on what users explore.
+The system automates multiple news-processing tasks and uses RAG to verify and refine model-generated content, improving its factual reliability. It also recommends related news based on the stories users explore.
 
-The system delivered a **10.56%** improvement in held-out multi-task performance, reduced the **hallucination score** by **41.2%**, and achieved over **3× faster** inference with vLLM.
+The system delivered a **10.56%** improvement in **Multi-Task Performance**, reduced the **Hallucination Score** by **41.2%**, and achieved over **3× Faster** inference with vLLM.
 
 <table align="center">
   <thead>
     <tr>
       <th align="center">Multi-Task Performance</th>
       <th align="center">Hallucination Score</th>
-      <th align="center">vLLM Inference</th>
+      <th align="center">Inference Speed</th>
     </tr>
   </thead>
   <tbody>
@@ -53,7 +53,7 @@ The system delivered a **10.56%** improvement in held-out multi-task performance
   Builds shared news-domain capabilities by jointly learning multiple tasks from long-form reporting.
 
 - **From Benchmarks to Current News**<br>
-  Although trained on historical benchmark datasets, the system is applied to newly published Guardian reporting from a different source and time period.
+  Although trained on historical benchmark datasets, the system is applied to newly published reporting from a different source and time period.
 
 - **Multi-Model Orchestration with Faithfulness Evaluation**<br>
   Brings complementary models together in an agentic workflow, with faithfulness evaluation measuring how well refined content remains grounded in source evidence.
