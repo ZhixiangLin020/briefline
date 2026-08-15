@@ -1,7 +1,7 @@
 # Briefline
 
 <h3 align="center">
-  An end-to-end news intelligence system: built around multi-task fine-tuning, multi-model verification, and hybrid retrieval.
+  An end-to-end news intelligence system built around multi-task fine-tuning, multi-model verification, and hybrid retrieval.
 </h3>
 <p align="center">
   <strong>Explore the live application:</strong>&nbsp;
