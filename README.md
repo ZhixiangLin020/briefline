@@ -4,9 +4,9 @@
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://briefline.streamlit.app/)
 
-Briefline turns long-form reporting into news intelligence. A fine-tuned Qwen2.5-3B model performs multi-task generation, Weaviate retrieves claim-level evidence, and a Qwen3-14B judge selectively corrects flagged outputs before the verified results support news discovery and source-grounded question answering.
+Briefline turns long-form reporting into verified news intelligence using a fine-tuned Qwen2.5-3B model, Weaviate evidence retrieval, and selective correction by a Qwen3-14B judge. The outputs support news discovery and source-grounded question answering.
 
-On the held-out test set, the selected model outperformed its base model by **10.56% in overall multi-task performance**. Judge-guided correction reduced the **RAGAS-derived hallucination score by 41.2%**, while vLLM delivered a measured **over 3× end-to-end inference speedup** compared with the Hugging Face Transformers path on the same workload.
+The system improved held-out multi-task performance by **10.56%**, reduced the **hallucination score** by **41.2%**, and achieved over **3× faster** inference with vLLM.
 
 ## Project Highlights
 
