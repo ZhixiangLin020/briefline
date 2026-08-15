@@ -14,11 +14,12 @@ Briefline is an efficient news intelligence system powered by multi-task fine-tu
 
 The system uses a multi-task fine-tuned model to automate news-processing tasks, alongside an agentic verification workflow that evaluates and selectively refines model-generated content, improving factual reliability. It also uses RAG-based retrieval to recommend related news based on the stories users explore.
 
-The system delivered a **10.56%** improvement in **Multi-Task Performance**, reduced the **Hallucination Score** by **41.2%**, and achieved over **3× Faster** inference with vLLM.
+The system reduced the **Training Corpus** by **86.83%** through semantic data selection, improved **Multi-Task Performance** by **10.56%**, reduced the **Hallucination Score** by **41.2%**, and achieved **over 3× Faster Inference** with vLLM.
 
 <table align="center">
   <thead>
     <tr>
+      <th align="center">Training Corpus</th>
       <th align="center">Multi-Task Performance</th>
       <th align="center">Hallucination Score</th>
       <th align="center">Inference Speed</th>
@@ -26,6 +27,7 @@ The system delivered a **10.56%** improvement in **Multi-Task Performance**, red
   </thead>
   <tbody>
     <tr>
+      <td align="center"><strong>−86.83%</strong></td>
       <td align="center"><strong>+10.56%</strong></td>
       <td align="center"><strong>−41.2%</strong></td>
       <td align="center"><strong>&gt;3× faster</strong></td>
@@ -65,7 +67,7 @@ The system delivered a **10.56%** improvement in **Multi-Task Performance**, red
   Improves retrieval coverage and ranking precision, surfacing more relevant evidence and related news.
 
 - **Graph-Based Semantic Deduplication**<br>
-  Identifies semantic overlap across the training corpus to reduce redundancy and create a cleaner, more diverse dataset.
+  Identifies semantic overlap and selects representative examples across the training corpus, reducing its size by 86.83% while improving data diversity.
 
 - **Efficient Fine-Tuning and Inference**<br>
   Optimizes model adaptation and serving for long-text workloads, delivering a measured over 3× inference speedup.
