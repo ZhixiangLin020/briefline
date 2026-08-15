@@ -75,6 +75,7 @@ The system delivered a **10.56%** improvement in **Multi-Task Performance**, red
 | Component | Requirement |
 |---|---|
 | Python | Python 3.12 |
+| Prebuilt artifacts | Git LFS is required to download the adapter and curated dataset archives |
 | Data selection, training, evaluation, and RAG backend | Linux x86_64 and one CUDA GPU; NVIDIA A100 or A800 recommended for the full workflow |
 | RAG services | PostgreSQL and Weaviate |
 | Frontend | CPU-only environment is sufficient |
@@ -89,6 +90,7 @@ The pinned GPU stack targets **CUDA 12.8** with **PyTorch 2.8.0**, **vLLM 0.10.2
 | Verify the pinned GPU stack | [GPU runtime check](docs/VERIFICATION.md#2-gpu-runtime-check) | CUDA validation; environment checks pass |
 | Verify the model pipeline with a bounded GPU run | [Model pipeline smoke test](docs/VERIFICATION.md#3-model-pipeline-smoke-test) | Bounded workflow; smoke evaluation and selected-model record are produced |
 | Reproduce the reported model experiment | [Full model experiment](#full-model-experiment) | Full workflow; training manifests and held-out results are produced |
+| Use the trained adapter and curated datasets | [Prebuilt artifacts](#prebuilt-artifacts) | Download with Git LFS, extract, and provide the local paths |
 | Validate RAG configuration without live requests | [RAG preflight](docs/VERIFICATION.md#4-rag-preflight) | Configuration validation; manifest reports `preflight_ok` |
 | Process Guardian articles through RAG | [RAG and Frontend Guide](docs/RAG_FRONTEND_INTEGRATION.md) | Current-news workflow; manifest reports `completed` or `no_new_records` |
 | Open an already populated news database | [CPU-only frontend](#cpu-only-frontend) | Read-only interface; Streamlit page opens |
@@ -97,7 +99,7 @@ Reported metrics come from the full model experiment; smoke mode is a bounded in
 
 ## Prebuilt Artifacts
 
-The trained adapter and curated CNN/DailyMail and KPTime datasets can be downloaded as compressed archives from [`artifacts/adapter`](artifacts/adapter) and [`artifacts/dataset`](artifacts/dataset). After cloning the repository with Git LFS, extract the archives and pass the extracted directories to the corresponding path inputs—for example, `ADAPTER_PATH`, `data.cnn_dm_dataset`, and `data.kptimes_dataset`—to run the relevant workflow without rebuilding these artifacts.
+The trained adapter and curated CNN/DailyMail and KPTime datasets can be downloaded as compressed archives from [`artifacts/adapter`](artifacts/adapter) and [`artifacts/dataset`](artifacts/dataset); supporting metric summaries are available in [`artifacts/results`](artifacts/results). After cloning the repository with Git LFS, extract the archives and pass the extracted directories to the corresponding path inputs—for example, `ADAPTER_PATH`, `data.cnn_dm_dataset`, and `data.kptimes_dataset`—to run the relevant workflow without rebuilding these artifacts.
 
 ## Full Model Experiment
 
@@ -322,6 +324,7 @@ Repository, GPU, model-pipeline, RAG, and frontend checks are centralized in [Ve
 
 ```text
 briefline/          unified CLI and runtime checks
+artifacts/           trained adapter, curated datasets, and metric summaries (Git LFS)
 data_processing/    CNN/DailyMail and KPTime curation
 training/           multi-task AdaLoRA training
 evaluation/         vLLM generation, scoring, and selection
