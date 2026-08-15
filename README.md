@@ -17,19 +17,32 @@ The system automates multiple news-processing tasks, verifies every generated ou
 
 The system delivered a **10.56%** improvement in held-out multi-task performance, reduced the **hallucination score** by **41.2%**, and achieved over **3× faster** inference with vLLM.
 
-| Multi-Task Performance | Hallucination Score | vLLM Inference |
-|:---:|:---:|:---:|
-| **+10.56%** | **−41.2%** | **>3× faster** |
+<table align="center">
+  <thead>
+    <tr>
+      <th align="center">Multi-Task Performance</th>
+      <th align="center">Hallucination Score</th>
+      <th align="center">vLLM Inference</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="center"><strong>+10.56%</strong></td>
+      <td align="center"><strong>−41.2%</strong></td>
+      <td align="center"><strong>&gt;3× faster</strong></td>
+    </tr>
+  </tbody>
+</table>
 
 ## System Architecture
 
-### Model Training Workflow
+### Training Workflow<br>
 
 <p align="center">
   <img src="docs/assets/briefline_model_training_workflow.svg" alt="Briefline model training workflow" width="90%">
 </p>
 
-### Model Application Workflow
+### Application Workflow<br>
 
 <p align="center">
   <img src="docs/assets/briefline_application_workflow.svg" alt="Briefline model application workflow" width="90%">
