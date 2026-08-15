@@ -10,7 +10,7 @@
   </a>
 </p>
 
-Briefline transforms long-form reporting into verified news intelligence through multi-task fine-tuning, hybrid retrieval, and agentic verification.
+Briefline is a news intelligence system powered by multi-task fine-tuning, hybrid retrieval, and agentic verification.
 
 The system automates multiple news-processing tasks, verifies every generated output, and selectively refines flagged content to deliver more reliable news intelligence while recommending related news based on what users explore.
 
