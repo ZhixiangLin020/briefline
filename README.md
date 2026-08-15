@@ -8,7 +8,7 @@ Briefline transforms long-form reporting into verified news intelligence through
 
 The system automates multiple news-processing tasks, verifies every generated output, and selectively refines flagged content to produce more reliable downstream answers while recommending news tailored to users’ interests.
 
-The system delivered a **10.56%** improvement in held-out multi-task performance, reduced the hallucination score by **41.2%**, and achieved over **3× faster** inference with vLLM.
+The system delivered a **10.56%** improvement in held-out multi-task performance, reduced the **hallucination score** by **41.2%**, and achieved over **3× faster** inference with vLLM.
 
 ## Project Highlights
 
@@ -52,7 +52,7 @@ The validation-selected model produced above powers the downstream current-news 
 | Python | Python 3.12 |
 | Data selection, training, evaluation, and RAG backend | Linux x86_64 and one CUDA GPU; NVIDIA A100 or A800 recommended for the full workflow |
 | RAG services | PostgreSQL and Weaviate |
-| Frontend | CPU-only git statusenvironment is sufficient |
+| Frontend | CPU-only environment is sufficient |
 
 The pinned GPU stack targets **CUDA 12.8** with **PyTorch 2.8.0**, **vLLM 0.10.2**, and **FlashAttention 2.8.3.post1**.
 
