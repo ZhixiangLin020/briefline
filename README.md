@@ -99,7 +99,9 @@ Reported metrics come from the full model experiment; smoke mode is a bounded in
 
 ## Prebuilt Artifacts
 
-The trained adapter and curated CNN/DailyMail and KPTime datasets can be downloaded as compressed archives from [`artifacts/adapter`](artifacts/adapter) and [`artifacts/dataset`](artifacts/dataset); supporting metric summaries are available in [`artifacts/results`](artifacts/results). After cloning the repository with Git LFS, extract the archives and pass the extracted directories to the corresponding path inputs—for example, `ADAPTER_PATH`, `data.cnn_dm_dataset`, and `data.kptimes_dataset`—to run the relevant workflow without rebuilding these artifacts.
+The trained adapter and curated CNN/DailyMail and KPTime datasets can be downloaded as compressed archives from [`artifacts/adapter`](artifacts/adapter) and [`artifacts/dataset`](artifacts/dataset); supporting metric summaries are available in [`artifacts/results`](artifacts/results). 
+
+After cloning the repository with Git LFS, extract the archives and pass the extracted directories to the corresponding path inputs—for example, `ADAPTER_PATH`, `data.cnn_dm_dataset`, and `data.kptimes_dataset`—to run the relevant workflow without rebuilding these artifacts.
 
 ## Full Model Experiment
 
