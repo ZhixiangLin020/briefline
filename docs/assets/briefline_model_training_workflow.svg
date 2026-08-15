@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="325" viewBox="0 0 1280 325" role="img" aria-labelledby="title desc">
+  <title id="title">Model Training Workflow</title>
+  <desc id="desc">CNN/DailyMail and KPTime data is curated with HNSW and Leiden, used for multi-task fine-tuning with Qwen2.5-3B, AdaLoRA, FlashAttention 2, dynamic data mixing and dynamic loss weighting, then evaluated with vLLM and text similarity.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#64748B"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="325" rx="22" fill="#F8FAFC"/>
+  <text x="40" y="45" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">Model Training Workflow</text>
+
+  <path d="M 205 200 H 235" stroke="#64748B" stroke-width="2.1" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 525 200 H 555" stroke="#64748B" stroke-width="2.1" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 905 200 H 935" stroke="#64748B" stroke-width="2.1" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1125 200 H 1155" stroke="#64748B" stroke-width="2.1" fill="none" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="30" y="142" width="175" height="115" rx="17" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
+    <text x="117" y="182" text-anchor="middle" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Raw News Data</text>
+    <text x="117" y="214" text-anchor="middle" fill="#64748B" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14">CNN/DailyMail</text>
+    <text x="117" y="238" text-anchor="middle" fill="#64748B" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14">KPTime</text>
+  </g>
+
+  <g>
+    <rect x="245" y="125" width="280" height="145" rx="19" fill="#EEF8FE" stroke="#38BDF8" stroke-width="2"/>
+    <rect x="245" y="125" width="5" height="145" rx="2.5" fill="#0284C7"/>
+    <text x="270" y="162" fill="#0369A1" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1.1">DATA CURATION</text>
+    <text x="270" y="204" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Semantic Deduplication</text>
+    <text x="270" y="239" fill="#0369A1" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">HNSW · Leiden</text>
+  </g>
+
+  <g>
+    <rect x="565" y="85" width="340" height="220" rx="21" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
+    <rect x="565" y="85" width="5" height="220" rx="2.5" fill="#7C3AED"/>
+    <text x="595" y="124" fill="#6D28D9" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1.1">MODEL TRAINING</text>
+    <text x="595" y="162" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Multi-Task Fine-Tuning</text>
+    <text x="595" y="199" fill="#4C1D95" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">Qwen2.5-3B · AdaLoRA</text>
+    <text x="595" y="228" fill="#4C1D95" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">FlashAttention 2</text>
+    <text x="595" y="257" fill="#4C1D95" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">Dynamic Data Mixing</text>
+    <text x="595" y="286" fill="#4C1D95" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">Dynamic Loss Weighting</text>
+  </g>
+
+  <g>
+    <rect x="945" y="140" width="180" height="120" rx="17" fill="#F3F6FA" stroke="#CBD5E1" stroke-width="1.6"/>
+    <text x="1035" y="178" text-anchor="middle" fill="#334155" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700">Model Evaluation</text>
+    <text x="1035" y="211" text-anchor="middle" fill="#475569" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600">vLLM</text>
+    <text x="1035" y="238" text-anchor="middle" fill="#475569" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600">Text Similarity</text>
+  </g>
+
+  <g>
+    <rect x="1165" y="145" width="95" height="110" rx="18" fill="#ECFDF5" stroke="#34D399" stroke-width="2"/>
+    <text x="1212" y="191" text-anchor="middle" fill="#065F46" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Selected</text>
+    <text x="1212" y="216" text-anchor="middle" fill="#065F46" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Model</text>
+  </g>
+</svg>

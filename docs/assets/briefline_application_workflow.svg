@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="755" viewBox="0 0 1200 755" role="img" aria-labelledby="title desc">
+  <title id="title">Briefline Application Workflow</title>
+  <desc id="desc">A compact vertical workflow showing news ingestion, multi-task inference, agentic verification, related-article retrieval and ranking, and the Briefline application. Technologies are aligned beside their corresponding functions.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#64748B"/>
+    </marker>
+    <marker id="purpleArrow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#7C3AED"/>
+    </marker>
+    <marker id="amberArrow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#A16207"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="755" rx="24" fill="#F8FAFC"/>
+  <text x="45" y="48" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="30" font-weight="700">Briefline Application Workflow</text>
+  <text x="330" y="92" text-anchor="middle" fill="#475569" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">Function</text>
+  <text x="945" y="92" text-anchor="middle" fill="#475569" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">Key Technology</text>
+
+  <g>
+    <rect x="70" y="110" width="520" height="70" rx="18" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.7"/>
+    <text x="330" y="153" text-anchor="middle" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">News Ingestion</text>
+    <path d="M 590 145 H 800" stroke="#D6DEE8" stroke-width="1.5"/>
+    <rect x="810" y="116" width="270" height="58" rx="16" fill="#F1F6FD" stroke="#60A5FA" stroke-width="1.7"/>
+    <text x="945" y="152" text-anchor="middle" fill="#1E40AF" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Guardian API</text>
+  </g>
+
+  <path d="M 330 180 V 202" stroke="#64748B" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="70" y="210" width="520" height="72" rx="18" fill="#F3F7FD" stroke="#60A5FA" stroke-width="2"/>
+    <text x="330" y="254" text-anchor="middle" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Multi-Task News Inference</text>
+    <path d="M 590 246 H 800" stroke="#D6DEE8" stroke-width="1.5"/>
+    <rect x="810" y="217" width="270" height="58" rx="16" fill="#EAF2FD" stroke="#60A5FA" stroke-width="1.7"/>
+    <text x="945" y="253" text-anchor="middle" fill="#1E40AF" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700">Qwen2.5-3B · vLLM</text>
+  </g>
+
+  <path d="M 330 282 V 312" stroke="#64748B" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="55" y="320" width="800" height="205" rx="23" fill="#F7F5FF" stroke="#8B5CF6" stroke-width="2.2"/>
+    <text x="455" y="354" text-anchor="middle" fill="#5B21B6" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="1">AGENTIC VERIFICATION WORKFLOW</text>
+
+    <rect x="95" y="373" width="300" height="105" rx="17" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.7"/>
+    <text x="245" y="413" text-anchor="middle" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">Evidence Retrieval</text>
+    <text x="245" y="443" text-anchor="middle" fill="#6D28D9" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">OpenAI Embeddings</text>
+    <text x="245" y="466" text-anchor="middle" fill="#6D28D9" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">Weaviate Hybrid Search</text>
+
+    <path d="M 395 425 H 490" stroke="#7C3AED" stroke-width="2.3" fill="none" marker-end="url(#purpleArrow)"/>
+
+    <rect x="500" y="373" width="300" height="105" rx="17" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.7"/>
+    <text x="650" y="418" text-anchor="middle" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">Judge Verification</text>
+    <text x="650" y="450" text-anchor="middle" fill="#6D28D9" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="600">Qwen3-14B</text>
+  </g>
+
+  <path d="M 855 425 H 890" stroke="#A16207" stroke-width="1.9" stroke-dasharray="6 6" fill="none" marker-end="url(#amberArrow)"/>
+  <g>
+    <rect x="900" y="380" width="260" height="90" rx="17" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.7" stroke-dasharray="6 6"/>
+    <text x="1030" y="419" text-anchor="middle" fill="#78350F" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700">Faithfulness Evaluation</text>
+    <text x="1030" y="449" text-anchor="middle" fill="#92400E" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">RAGAS · Gemini</text>
+  </g>
+
+  <path d="M 330 525 V 547" stroke="#64748B" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="70" y="555" width="520" height="72" rx="18" fill="#F0FDFA" stroke="#2DD4BF" stroke-width="2"/>
+    <text x="330" y="599" text-anchor="middle" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Related-Article Retrieval &amp; Ranking</text>
+    <path d="M 590 591 H 800" stroke="#D6DEE8" stroke-width="1.5"/>
+    <rect x="810" y="562" width="270" height="58" rx="16" fill="#E6FAF6" stroke="#2DD4BF" stroke-width="1.7"/>
+    <text x="945" y="587" text-anchor="middle" fill="#115E59" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">Hybrid Recall</text>
+    <text x="945" y="610" text-anchor="middle" fill="#115E59" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">ColBERT Reranking</text>
+  </g>
+
+  <path d="M 330 627 V 654" stroke="#64748B" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
+
+  <g>
+    <rect x="70" y="662" width="520" height="70" rx="18" fill="#F0FDF4" stroke="#34D399" stroke-width="2"/>
+    <text x="330" y="705" text-anchor="middle" fill="#064E3B" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Briefline News Application</text>
+    <path d="M 590 697 H 800" stroke="#D6DEE8" stroke-width="1.5"/>
+    <rect x="810" y="668" width="270" height="58" rx="16" fill="#E5F9EC" stroke="#34D399" stroke-width="1.7"/>
+    <text x="945" y="704" text-anchor="middle" fill="#047857" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700">PostgreSQL · Streamlit</text>
+  </g>
+</svg>
