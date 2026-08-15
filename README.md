@@ -8,7 +8,7 @@ Briefline transforms long-form reporting into verified news intelligence through
 
 The system automates multiple news-processing tasks, verifies every generated output, and selectively refines flagged content to produce more reliable downstream answers while recommending news tailored to users’ interests.
 
-The system delivered a 10.56% improvement in held-out multi-task performance, reduced the hallucination score by 41.2%, and achieved over 3× faster inference with vLLM.
+The system delivered a **10.56%** improvement in held-out multi-task performance, reduced the hallucination score by **41.2%**, and achieved over **3× faster** inference with vLLM.
 
 ## Project Highlights
 
