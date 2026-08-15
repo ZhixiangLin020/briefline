@@ -95,6 +95,10 @@ The pinned GPU stack targets **CUDA 12.8** with **PyTorch 2.8.0**, **vLLM 0.10.2
 
 Reported metrics come from the full model experiment; smoke mode is a bounded integration check.
 
+## Prebuilt Artifacts
+
+The trained adapter and curated CNN/DailyMail and KPTime datasets can be downloaded as compressed archives from [`artifacts/adapter`](artifacts/adapter) and [`artifacts/dataset`](artifacts/dataset). After cloning the repository with Git LFS, extract the archives and pass the extracted directories to the corresponding path inputs—for example, `ADAPTER_PATH`, `data.cnn_dm_dataset`, and `data.kptimes_dataset`—to run the relevant workflow without rebuilding these artifacts.
+
 ## Full Model Experiment
 
 This section is the shortest path through the formal data, training, and evaluation workflow. It intentionally does not use sample limits or `--smoke-test`.
