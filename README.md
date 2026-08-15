@@ -1,35 +1,47 @@
 # Briefline
 
-**An end-to-end ML system built around a fine-tuned multi-task model for long-form news.**
+**An end-to-end news intelligence system built around multi-task fine-tuning, multi-model verification, and hybrid retrieval.**
 
-Briefline uses AdaLoRA to adapt Qwen2.5-3B for long-text multi-task learning. The selected model powers current-news analysis, hybrid retrieval, and source-grounded question answering.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://briefline.streamlit.app/)
 
-On the held-out test set, the fine-tuned model outperformed its base model by **10.56% in overall multi-task performance**. Downstream RAGAS evaluation showed a **41.2% reduction in the derived hallucination score**.
+Briefline turns long-form reporting into news intelligence. A fine-tuned Qwen2.5-3B model performs multi-task generation, Weaviate retrieves claim-level evidence, and a Qwen3-14B judge selectively corrects flagged outputs before the verified results support news discovery and source-grounded question answering.
 
-![Briefline Streamlit frontend](docs/assets/briefline_frontend.png)
+On the held-out test set, the selected model outperformed its base model by **10.56% in overall multi-task performance**. Judge-guided correction reduced the **RAGAS-derived hallucination score by 41.2%**, while vLLM delivered a measured **over 3× end-to-end inference speedup** compared with the Hugging Face Transformers path on the same workload.
 
 ## Project Highlights
 
-- **Long-Text Multi-Task Learning**  
-  Builds shared news-domain capabilities across summarization, classification, and keyphrase generation.
-- **Graph-Based Semantic Deduplication**  
-  Combines HNSW nearest-neighbor search with Leiden community detection to reduce semantic redundancy before training.
-- **Parameter-Efficient Fine-Tuning**  
-  Uses AdaLoRA and FlashAttention 2 to adapt Qwen2.5-3B for long inputs without full-model fine-tuning.
-- **From Benchmarks to Current News**  
+- **Long-Text Multi-Task Learning**
+  Fine-tunes one shared Qwen2.5-3B model across summarization, topic classification, and keyphrase generation for long-form news.
+
+- **From Benchmarks to Current News**
   Trains on CNN/DailyMail and KPTime, then applies the selected model to Guardian reporting from a different source and time period.
-- **Faithfulness-Evaluated Hybrid RAG**  
-  Combines keyword and vector retrieval in Weaviate and evaluates downstream answer faithfulness with RAGAS.
 
-## System Overview
+- **Multi-Model Orchestration with Faithfulness Evaluation**
+  Orchestrates Qwen2.5-3B generation, claim-level evidence retrieval, Qwen3-14B verification, and downstream answer faithfulness evaluation with RAGAS in a multi-stage agentic workflow.
 
-**Model lifecycle**
+- **LLM-as-a-Judge with Conditional Routing**
+  Preserves source-supported outputs through PASS routing and sends only VERIFY cases to targeted full-article correction instead of regenerating every output.
 
-`Data curation → AdaLoRA fine-tuning → Validation-based selection → Held-out test evaluation`
+- **Hybrid Retrieval and ColBERT Reranking**
+  Combines BM25 and vector search in Weaviate for claim-level evidence retrieval, then applies ColBERT late-interaction reranking to related-article candidates.
 
-**Application flow**
+- **Graph-Based Semantic Deduplication**
+  Combines HNSW nearest-neighbor search with Leiden community detection to reduce semantic redundancy before training.
 
-`Guardian article → Multi-task inference → Hybrid retrieval → Source-grounded answer → RAGAS evaluation`
+- **Efficient Fine-Tuning and Inference**
+  Uses AdaLoRA and FlashAttention 2 for parameter-efficient long-text training, then serves the selected model with vLLM, delivering a measured >3× speedup over the Transformers path on the same workload.
+
+## System Architecture
+
+<p align="center">
+  <img src="docs/assets/briefline_model_training_workflow.svg" alt="Briefline model training workflow" width="90%">
+</p>
+
+The validation-selected model produced above powers the downstream current-news workflow.
+
+<p align="center">
+  <img src="docs/assets/briefline_application_workflow.svg" alt="Briefline application workflow" width="90%">
+</p>
 
 ## Environment Requirements
 
@@ -51,7 +63,7 @@ The pinned GPU stack targets **CUDA 12.8** with **PyTorch 2.8.0**, **vLLM 0.10.2
 | Verify the model pipeline with a bounded GPU run | [Model pipeline smoke test](docs/VERIFICATION.md#3-model-pipeline-smoke-test) | Bounded workflow; smoke evaluation and selected-model record are produced |
 | Reproduce the reported model experiment | [Full model experiment](#full-model-experiment) | Full workflow; training manifests and held-out results are produced |
 | Validate RAG configuration without live requests | [RAG preflight](docs/VERIFICATION.md#4-rag-preflight) | Configuration validation; manifest reports `preflight_ok` |
-| Process Guardian articles through RAG | [RAG workflow](#rag-workflow) | Current-news workflow; manifest reports `completed` or `no_new_records` |
+| Process Guardian articles through RAG | [RAG and Frontend Guide](docs/RAG_FRONTEND_INTEGRATION.md) | Current-news workflow; manifest reports `completed` or `no_new_records` |
 | Open an already populated news database | [CPU-only frontend](#cpu-only-frontend) | Read-only interface; Streamlit page opens |
 
 Reported metrics come from the full model experiment; smoke mode is a bounded integration check.
@@ -59,6 +71,9 @@ Reported metrics come from the full model experiment; smoke mode is a bounded in
 ## Full Model Experiment
 
 This section is the shortest path through the formal data, training, and evaluation workflow. It intentionally does not use sample limits or `--smoke-test`.
+
+<details>
+<summary><strong>Show full experiment reproduction steps</strong></summary>
 
 ### 1. Enter the repository and define shared paths
 
@@ -177,9 +192,14 @@ Evaluation reads candidate checkpoints from `best_model/best_k_metrics.json`; it
 
 Evaluation writes the validation-selected model record used by the RAG workflow.
 
+</details>
+
 See the [Model Pipeline Guide](docs/MODEL_PIPELINE.md) for the complete parameter contract, resume procedure, output manifests, and the optional YAML-driven end-to-end command.
 
 ## RAG Workflow
+
+<details>
+<summary><strong>Show RAG setup and integration details</strong></summary>
 
 ### 1. Install the backend environment
 
@@ -217,34 +237,14 @@ test -f "$ADAPTER_PATH/adapter_config.json"
 
 The RAG workflow consumes the validation-selected model produced by the evaluation stage through `ADAPTER_PATH`.
 
-### 4. Preflight and run
+For RAG preflight, production execution, taxonomy setup, and recovery procedures, see the [RAG and Frontend Guide](docs/RAG_FRONTEND_INTEGRATION.md).
 
-Validate the configuration before making external requests or loading models:
-
-```bash
-python -m briefline rag \
-  --mode full \
-  --stages all \
-  --max-new-articles 2500 \
-  --max-pending-articles 2500 \
-  --only-current-run \
-  --recover-pending-generation \
-  --use-colbert \
-  --adapter-path "$ADAPTER_PATH" \
-  --preflight-only
-```
-
-Preflight validates the selected configuration before live requests or model loading. Remove `--preflight-only` to run the production-scale workflow with the same limits.
-
-After the first successful RAG run, build the taxonomy required by the frontend:
-
-```bash
-python -m briefline taxonomy
-```
-
-See the [RAG and Frontend Guide](docs/RAG_FRONTEND_INTEGRATION.md) for the complete settings template, stage ownership, automatic schema behavior, recovery, and faithfulness evaluation.
+</details>
 
 ## CPU-Only Frontend
+
+<details>
+<summary><strong>Show frontend setup and launch steps</strong></summary>
 
 The frontend reads PostgreSQL and does not load Torch, vLLM, an adapter, or a retrieval model. It expects `raw_articles`, `judge_results`, `category_broad_mapping`, and `article_recommendations` to have been populated by the backend and taxonomy workflows.
 
@@ -260,7 +260,12 @@ python -m briefline frontend \
 
 Open `http://localhost:8501`. Launch the frontend after the RAG and taxonomy workflows have populated the required tables.
 
+</details>
+
 ## Configuration Map
+
+<details>
+<summary><strong>Show configuration file reference</strong></summary>
 
 | File | Purpose |
 |---|---|
@@ -273,27 +278,16 @@ Open `http://localhost:8501`. Launch the frontend after the RAG and taxonomy wor
 | `.env.example` | Names of RAG, model-path, artifact-path, and frontend variables |
 | `rag/config.py` | RAG CLI defaults and validation |
 
+</details>
+
 ## Verification
 
 Repository, GPU, model-pipeline, RAG, and frontend checks are centralized in [Verification and Smoke Tests](docs/VERIFICATION.md).
 
-## Results
-
-| Evaluation | Base | Selected model | Change |
-|---|---:|---:|---:|
-| Validation combined score | 0.734193 | 0.832856 | +13.44% |
-| Test combined score | 0.729252 | 0.806265 | **+10.56%** |
-| RAGAS-derived hallucination score | 0.08343 | 0.04902 | **−41.2%** |
-
-The combined model score is an equal-weight average of CNN/DailyMail and KPTime MoverScore-based task scores. The RAG value is defined as `1 − faithfulness`. Full definitions, checkpoint comparisons, selection rules, and RAGAS scope are documented in [Experiment Results](docs/EXPERIMENT_RESULTS.md).
-
-## Tech Stack
-
-- **Data and training:** HNSW · Leiden · Qwen2.5-3B · PyTorch · Transformers · PEFT/AdaLoRA · FlashAttention 2
-- **Inference and retrieval:** vLLM · Weaviate · PostgreSQL
-- **Application and evaluation:** Streamlit · RAGAS
-
 ## Repository Layout
+
+<details>
+<summary><strong>Show repository structure</strong></summary>
 
 ```text
 briefline/          unified CLI and runtime checks
@@ -307,6 +301,8 @@ scripts/            installation, runtime, and documentation verification
 tests/              CPU regression tests
 docs/               pipeline, results, deployment, and verification guides
 ```
+
+</details>
 
 ## Documentation
 
