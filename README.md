@@ -6,8 +6,9 @@
 </h3>
 
 <p align="center">
+  <strong>Explore the live application:</strong>&nbsp;
   <a href="https://briefline.streamlit.app/">
-    <img src="https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white" alt="Live Demo">
+    <img src="https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white" alt="Open the Briefline live demo">
   </a>
 </p>
 
