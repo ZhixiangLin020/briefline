@@ -43,34 +43,30 @@ The system reduced the **Training Corpus** by **86.83%** through semantic data s
   <img src="docs/assets/briefline_model_training_workflow.svg" alt="Briefline model training workflow" width="90%">
 </p>
 
+#### Highlights
+- **[1] Graph-Based Semantic Deduplication**<br>
+  Identifies semantic overlap and selects representative examples across the training corpus, reducing its size by 86.83% while improving data diversity.
+
+- **[2] Long-Text Multi-Task Learning**<br>
+  Builds shared news-domain capabilities by jointly learning multiple tasks from long-form reporting.
+
+- **[3] Efficient Fine-Tuning and Inference**<br>
+  Optimizes model adaptation and serving for long-text workloads, delivering a measured over 3× inference speedup.
+
 ### Application Workflow<br>
 
 <p align="center">
   <img src="docs/assets/briefline_application_workflow.svg" alt="Briefline model application workflow" width="90%">
 </p>
 
-## Project Highlights
-
-- **Long-Text Multi-Task Learning**<br>
-  Builds shared news-domain capabilities by jointly learning multiple tasks from long-form reporting.
-
-- **From Benchmarks to Current News**<br>
+- **[4] From Benchmarks to Current News**<br>
   Although trained on historical benchmark datasets, the system is applied to newly published reporting from a different source and time period.
 
-- **Multi-Model Orchestration with Faithfulness Evaluation**<br>
-  Brings complementary models together in an agentic workflow, with faithfulness evaluation measuring how well refined content remains grounded in source evidence.
+- **[5] Agentic Verification with LLM-as-a-Judge**<br>
+  Orchestrates complementary models through conditional verification and faithfulness evaluation to improve the reliability of generated news intelligence.
 
-- **LLM-as-a-Judge with Conditional Routing**<br>
-  Uses an LLM judge to automatically evaluate each output and dynamically route flagged content for targeted correction.
-
-- **Hybrid Retrieval and ColBERT Reranking**<br>
+- **[6] Hybrid Retrieval and ColBERT Reranking**<br>
   Improves retrieval coverage and ranking precision, surfacing more relevant evidence and related news.
-
-- **Graph-Based Semantic Deduplication**<br>
-  Identifies semantic overlap and selects representative examples across the training corpus, reducing its size by 86.83% while improving data diversity.
-
-- **Efficient Fine-Tuning and Inference**<br>
-  Optimizes model adaptation and serving for long-text workloads, delivering a measured over 3× inference speedup.
 
 ## Environment Requirements
 

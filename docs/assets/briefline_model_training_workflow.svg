@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="325" viewBox="0 0 1280 325" role="img" aria-labelledby="title desc">
-  <title id="title">Model Training Workflow</title>
-  <desc id="desc">CNN/DailyMail and KPTime data is curated with HNSW and Leiden, used for multi-task fine-tuning with Qwen2.5-3B, AdaLoRA, FlashAttention 2, dynamic data mixing and dynamic loss weighting, then evaluated with vLLM and text similarity.</desc>
+  <title id="title">Model Training Workflow with README highlight anchors</title>
+  <desc id="desc">CNN/DailyMail and KPTime data is curated with HNSW and Leiden, used for multi-task fine-tuning with Qwen2.5-3B, AdaLoRA, FlashAttention 2, dynamic data mixing and dynamic loss weighting, then evaluated with vLLM and text similarity. Numbered anchors map the diagram to project highlights in the README.</desc>
   <defs>
     <marker id="arrow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto" markerUnits="strokeWidth">
       <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#64748B"/>
@@ -12,8 +12,8 @@
 
   <path d="M 205 200 H 235" stroke="#64748B" stroke-width="2.1" fill="none" marker-end="url(#arrow)"/>
   <path d="M 525 200 H 555" stroke="#64748B" stroke-width="2.1" fill="none" marker-end="url(#arrow)"/>
-  <path d="M 905 200 H 935" stroke="#64748B" stroke-width="2.1" fill="none" marker-end="url(#arrow)"/>
-  <path d="M 1125 200 H 1155" stroke="#64748B" stroke-width="2.1" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 905 200 H 920" stroke="#64748B" stroke-width="2.1" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 1150 200 H 1160" stroke="#64748B" stroke-width="2.1" fill="none" marker-end="url(#arrow)"/>
 
   <g>
     <rect x="30" y="142" width="175" height="115" rx="17" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.6"/>
@@ -25,7 +25,7 @@
   <g>
     <rect x="245" y="125" width="280" height="145" rx="19" fill="#EEF8FE" stroke="#38BDF8" stroke-width="2"/>
     <rect x="245" y="125" width="5" height="145" rx="2.5" fill="#0284C7"/>
-    <text x="270" y="162" fill="#0369A1" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1.1">DATA CURATION</text>
+    <text x="270" y="162" fill="#0369A1" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="1.1">DATA CURATION</text>
     <text x="270" y="204" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Semantic Deduplication</text>
     <text x="270" y="239" fill="#0369A1" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">HNSW · Leiden</text>
   </g>
@@ -33,7 +33,7 @@
   <g>
     <rect x="565" y="85" width="340" height="220" rx="21" fill="#F5F3FF" stroke="#8B5CF6" stroke-width="2"/>
     <rect x="565" y="85" width="5" height="220" rx="2.5" fill="#7C3AED"/>
-    <text x="595" y="124" fill="#6D28D9" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1.1">MODEL TRAINING</text>
+    <text x="595" y="124" fill="#6D28D9" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="1.1">MODEL TRAINING</text>
     <text x="595" y="162" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Multi-Task Fine-Tuning</text>
     <text x="595" y="199" fill="#4C1D95" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">Qwen2.5-3B · AdaLoRA</text>
     <text x="595" y="228" fill="#4C1D95" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">FlashAttention 2</text>
@@ -42,15 +42,36 @@
   </g>
 
   <g>
-    <rect x="945" y="140" width="180" height="120" rx="17" fill="#F3F6FA" stroke="#CBD5E1" stroke-width="1.6"/>
-    <text x="1035" y="178" text-anchor="middle" fill="#334155" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700">Model Evaluation</text>
-    <text x="1035" y="211" text-anchor="middle" fill="#475569" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600">vLLM</text>
-    <text x="1035" y="238" text-anchor="middle" fill="#475569" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600">Text Similarity</text>
+    <rect x="930" y="140" width="220" height="120" rx="17" fill="#F3F6FA" stroke="#CBD5E1" stroke-width="1.6"/>
+    <text x="943" y="181" fill="#334155" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="800">Model Evaluation</text>
+    <text x="1040" y="215" text-anchor="middle" fill="#475569" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600">vLLM</text>
+    <text x="1040" y="240" text-anchor="middle" fill="#475569" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="600">Text Similarity</text>
   </g>
 
   <g>
-    <rect x="1165" y="145" width="95" height="110" rx="18" fill="#ECFDF5" stroke="#34D399" stroke-width="2"/>
-    <text x="1212" y="191" text-anchor="middle" fill="#065F46" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Selected</text>
-    <text x="1212" y="216" text-anchor="middle" fill="#065F46" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Model</text>
+    <rect x="1170" y="145" width="95" height="110" rx="18" fill="#ECFDF5" stroke="#34D399" stroke-width="2"/>
+    <text x="1217" y="191" text-anchor="middle" fill="#065F46" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Selected</text>
+    <text x="1217" y="216" text-anchor="middle" fill="#065F46" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Model</text>
   </g>
+  <!-- README highlight anchors -->
+  <g aria-label="Highlight 1: graph-based semantic deduplication">
+    <rect x="413" y="136" width="42" height="29" rx="8" fill="#BAE6FD" stroke="#0EA5E9" stroke-width="1.8"/>
+    <text x="434" y="157" text-anchor="middle" fill="#075985" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="800">[1]</text>
+  </g>
+
+  <g aria-label="Highlight 2: long-text multi-task learning">
+    <rect x="748" y="100" width="42" height="29" rx="8" fill="#DDD6FE" stroke="#7C3AED" stroke-width="1.8"/>
+    <text x="769" y="121" text-anchor="middle" fill="#5B21B6" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="800">[2]</text>
+  </g>
+
+  <g aria-label="Highlight 3: efficient fine-tuning">
+    <rect x="796" y="100" width="42" height="29" rx="8" fill="#DDD6FE" stroke="#7C3AED" stroke-width="1.8"/>
+    <text x="817" y="121" text-anchor="middle" fill="#5B21B6" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="800">[3]</text>
+  </g>
+
+  <g aria-label="Highlight 3: efficient inference">
+    <rect x="1100" y="160" width="36" height="24" rx="7" fill="#E2E8F0" stroke="#64748B" stroke-width="1.6"/>
+    <text x="1118" y="178" text-anchor="middle" fill="#1E293B" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" font-weight="800">[3]</text>
+  </g>
+
 </svg>

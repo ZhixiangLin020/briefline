@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="755" viewBox="0 0 1200 755" role="img" aria-labelledby="title desc">
-  <title id="title">Briefline Application Workflow</title>
-  <desc id="desc">A compact vertical workflow showing news ingestion, multi-task inference, agentic verification, related-article retrieval and ranking, and the Briefline application. Technologies are aligned beside their corresponding functions.</desc>
+  <title id="title">Briefline Application Workflow with README highlight anchors</title>
+  <desc id="desc">A compact vertical workflow showing news ingestion, multi-task inference, agentic verification, related-article retrieval and ranking, and the Briefline application. Numbered anchors map the workflow to project highlights in the README.</desc>
   <defs>
     <marker id="arrow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto" markerUnits="strokeWidth">
       <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#64748B"/>
@@ -20,7 +20,7 @@
 
   <g>
     <rect x="70" y="110" width="520" height="70" rx="18" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.7"/>
-    <text x="330" y="153" text-anchor="middle" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">News Ingestion</text>
+    <text x="305" y="153" text-anchor="middle" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">News Ingestion</text>
     <path d="M 590 145 H 800" stroke="#D6DEE8" stroke-width="1.5"/>
     <rect x="810" y="116" width="270" height="58" rx="16" fill="#F1F6FD" stroke="#60A5FA" stroke-width="1.7"/>
     <text x="945" y="152" text-anchor="middle" fill="#1E40AF" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="18" font-weight="700">Guardian API</text>
@@ -33,14 +33,14 @@
     <text x="330" y="254" text-anchor="middle" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Multi-Task News Inference</text>
     <path d="M 590 246 H 800" stroke="#D6DEE8" stroke-width="1.5"/>
     <rect x="810" y="217" width="270" height="58" rx="16" fill="#EAF2FD" stroke="#60A5FA" stroke-width="1.7"/>
-    <text x="945" y="253" text-anchor="middle" fill="#1E40AF" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700">Qwen2.5-3B · vLLM</text>
+    <text x="920" y="253" text-anchor="middle" fill="#1E40AF" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700">Qwen2.5-3B · vLLM</text>
   </g>
 
   <path d="M 330 282 V 312" stroke="#64748B" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
 
   <g>
     <rect x="55" y="320" width="800" height="205" rx="23" fill="#F7F5FF" stroke="#8B5CF6" stroke-width="2.2"/>
-    <text x="455" y="354" text-anchor="middle" fill="#5B21B6" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="1">AGENTIC VERIFICATION WORKFLOW</text>
+    <text x="431" y="354" text-anchor="middle" fill="#5B21B6" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="800" letter-spacing="1">AGENTIC VERIFICATION WORKFLOW</text>
 
     <rect x="95" y="373" width="300" height="105" rx="17" fill="#FFFFFF" stroke="#C4B5FD" stroke-width="1.7"/>
     <text x="245" y="413" text-anchor="middle" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="21" font-weight="700">Evidence Retrieval</text>
@@ -68,8 +68,8 @@
     <text x="330" y="599" text-anchor="middle" fill="#0F172A" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">Related-Article Retrieval &amp; Ranking</text>
     <path d="M 590 591 H 800" stroke="#D6DEE8" stroke-width="1.5"/>
     <rect x="810" y="562" width="270" height="58" rx="16" fill="#E6FAF6" stroke="#2DD4BF" stroke-width="1.7"/>
-    <text x="945" y="587" text-anchor="middle" fill="#115E59" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">Hybrid Recall</text>
-    <text x="945" y="610" text-anchor="middle" fill="#115E59" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">ColBERT Reranking</text>
+    <text x="920" y="587" text-anchor="middle" fill="#115E59" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">Hybrid Recall</text>
+    <text x="920" y="610" text-anchor="middle" fill="#115E59" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700">ColBERT Reranking</text>
   </g>
 
   <path d="M 330 627 V 654" stroke="#64748B" stroke-width="2.2" fill="none" marker-end="url(#arrow)"/>
@@ -81,4 +81,25 @@
     <rect x="810" y="668" width="270" height="58" rx="16" fill="#E5F9EC" stroke="#34D399" stroke-width="1.7"/>
     <text x="945" y="704" text-anchor="middle" fill="#047857" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="17" font-weight="700">PostgreSQL · Streamlit</text>
   </g>
+  <!-- README highlight anchors -->
+  <g aria-label="Highlight 4: from benchmarks to current news">
+    <rect x="413" y="132" width="42" height="29" rx="8" fill="#E2E8F0" stroke="#64748B" stroke-width="1.8"/>
+    <text x="434" y="153" text-anchor="middle" fill="#1E293B" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="800">[4]</text>
+  </g>
+
+  <g aria-label="Highlight 3: vLLM inference carried forward from the model training workflow">
+    <rect x="1017" y="232" width="42" height="29" rx="8" fill="#BFDBFE" stroke="#3B82F6" stroke-width="1.8"/>
+    <text x="1038" y="253" text-anchor="middle" fill="#1E40AF" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="800">[3]</text>
+  </g>
+
+  <g aria-label="Highlight 5: agentic verification with LLM-as-a-Judge">
+    <rect x="604" y="333" width="42" height="29" rx="8" fill="#DDD6FE" stroke="#7C3AED" stroke-width="1.8"/>
+    <text x="625" y="354" text-anchor="middle" fill="#5B21B6" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="800">[5]</text>
+  </g>
+
+  <g aria-label="Highlight 6: hybrid retrieval and ColBERT reranking">
+    <rect x="1010" y="576" width="42" height="29" rx="8" fill="#99F6E4" stroke="#14B8A6" stroke-width="1.8"/>
+    <text x="1031" y="597" text-anchor="middle" fill="#115E59" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="800">[6]</text>
+  </g>
+
 </svg>
