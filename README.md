@@ -43,7 +43,7 @@ The system reduced the **Training Corpus** by **86.83%** through semantic data s
   <img src="docs/assets/briefline_model_training_workflow.svg" alt="Briefline model training workflow" width="90%">
 </p>
 
-#### Highlights
+#### Highlights:
 - **[1] Graph-Based Semantic Deduplication**<br>
   Identifies semantic overlap and selects representative examples across the training corpus, reducing its size by 86.83% while improving data diversity.
 
@@ -59,6 +59,7 @@ The system reduced the **Training Corpus** by **86.83%** through semantic data s
   <img src="docs/assets/briefline_application_workflow.svg" alt="Briefline model application workflow" width="90%">
 </p>
 
+#### Highlights:
 - **[4] From Benchmarks to Current News**<br>
   Although trained on historical benchmark datasets, the system is applied to newly published reporting from a different source and time period.
 
