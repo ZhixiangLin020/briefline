@@ -1,18 +1,18 @@
 # Experiment Results
 
-Briefline evaluates an end-to-end news intelligence pipeline built around graph-based semantic data selection, multi-task fine-tuning, agentic verification, and optimized inference. Semantic data selection reduced the training corpus by **86.83%**. The validation-selected model improved held-out multi-task performance by **10.56%**, while the agentic verification workflow reduced the **RAGAS-derived hallucination score by 41.2%**. vLLM also delivered a measured **over 3× end-to-end inference speedup**.
+Briefline evaluates an end-to-end news intelligence pipeline built around graph-based semantic data selection, multi-task fine-tuning, agentic verification, and optimized inference. Semantic data selection reduced the training corpus by **86.83%**. The validation-selected model improved held-out multi-task performance by **13.74%**, while the agentic verification workflow reduced the **RAGAS-derived hallucination score by 41.2%**. vLLM also delivered a measured **over 3× end-to-end inference speedup**.
 
 ## Results at a Glance
 
 | Evaluation | Reference | Briefline | Change |
 |---|---:|---:|---:|
 | Training corpus size | 547,036 original | 72,026 selected | **−86.83%** |
-| Test combined model score | 0.7293 base model | 0.8063 fine-tuned | **+10.56%** |
+| Test three-task average score | 0.7178 base mode | 0.8164 fine-tuned | **+13.74%** |
 | RAGAS faithfulness | 0.9166 before verification | 0.9510 after verification | **+3.44 points** |
 | RAGAS-derived hallucination score | 0.0834 before verification | 0.0490 after verification | **−41.2%** |
 | End-to-end inference | Hugging Face Transformers | vLLM | **>3× faster** |
 
-The corpus-size result measures semantic data selection before training. The combined model score compares the base and fine-tuned models on held-out multi-task test sets. The RAGAS results compare generated content before and after agentic verification, while the inference result compares the Hugging Face Transformers and vLLM execution paths.
+The corpus-size result measures semantic data selection before training. The three-task average score compares the base and fine-tuned models across held-out summarization, category classification, and keyphrase generation tasks, with each task receiving equal weight. The RAGAS results compare generated content before and after agentic verification, while the inference result compares the Hugging Face Transformers and vLLM execution paths.
 
 ## Graph-Based Semantic Data Selection
 
@@ -35,7 +35,7 @@ Briefline adapts `Qwen/Qwen2.5-3B-Instruct` with AdaLoRA using selected examples
 
 The full experiment used **37,739 CNN/DailyMail** and **34,287 KPTime** training examples. Evaluation used 1,000 validation and 1,000 held-out test examples from each dataset.
 
-The combined score equally weights CNN/DailyMail summarization performance and KPTime category/keyphrase performance using RoBERTa-based MoverScore. Checkpoint selection was based only on validation performance; the test split was reserved for final reporting.
+The reported three-task average equally weights CNN/DailyMail summarization, KPTimes category classification, and KPTimes keyphrase generation using RoBERTa-based MoverScore. The average score increased from **0.7178 to 0.8164**, representing a **13.74% relative improvement**. Checkpoint selection was based only on validation performance; the test split was reserved for final reporting.
 
 ## Parameter-Efficient Adaptation
 

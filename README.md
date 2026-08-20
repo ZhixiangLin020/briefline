@@ -14,7 +14,7 @@ Briefline is an efficient news intelligence system powered by multi-task fine-tu
 
 The system uses a multi-task fine-tuned model to automate news-processing tasks, alongside an agentic verification workflow that evaluates and selectively refines model-generated content, improving factual reliability. It also uses RAG-based retrieval to recommend related news based on the stories users explore.
 
-The system reduced the **Training Corpus** by **86.83%** through semantic data selection, improved **Multi-Task Performance** by **10.56%**, reduced the **Hallucination Score** by **41.2%**, and achieved **over 3× Faster Inference** with vLLM.
+The system reduced the **Training Corpus** by **86.83%** through semantic data selection, improved **Multi-Task Performance** by **13.74%**, reduced the **Hallucination Score** by **41.2%**, and achieved **over 3× Faster Inference** with vLLM.
 
 <table align="center">
   <thead>
@@ -28,7 +28,7 @@ The system reduced the **Training Corpus** by **86.83%** through semantic data s
   <tbody>
     <tr>
       <td align="center"><strong>−86.83%</strong></td>
-      <td align="center"><strong>+10.56%</strong></td>
+      <td align="center"><strong>+13.74%%</strong></td>
       <td align="center"><strong>−41.2%</strong></td>
       <td align="center"><strong>&gt;3× faster</strong></td>
     </tr>
