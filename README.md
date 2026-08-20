@@ -34,7 +34,13 @@ The system reduced the **Training Corpus** by **86.83%** through semantic data s
     </tr>
   </tbody>
 </table>
-
+<br>
+<p align="center">
+  <strong>Technical Paper:</strong>
+  <a href="docs/Briefline.pdf">
+    Briefline: An End-to-End Framework for Multi-Task News Processing and Agentic Verification
+  </a>
+</p>
 ## System Architecture
 
 ### Training Workflow<br>
