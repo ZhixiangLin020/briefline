@@ -28,7 +28,7 @@ The system reduced the **Training Corpus** by **86.83%** through semantic data s
   <tbody>
     <tr>
       <td align="center"><strong>−86.83%</strong></td>
-      <td align="center"><strong>+13.74%%</strong></td>
+      <td align="center"><strong>+13.74%</strong></td>
       <td align="center"><strong>−41.2%</strong></td>
       <td align="center"><strong>&gt;3× faster</strong></td>
     </tr>
